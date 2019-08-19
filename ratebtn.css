@@ -1,0 +1,13 @@
+.star-rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+.star-svg {
+    cursor: pointer;
+    fill: gray;
+    transition: all 0.3s ease-in;
+}
+.star-svg:hover ~ .star-svg,
+.star-svg:hover {
+    fill: #ffb900;
+}
