@@ -53,7 +53,7 @@ class RateButton extends HTMLCustomElement {
             return;
         }
 
-        this.appendChild(this.render(this.star, this.width));
+        this.appendChild(this.render(this.stars, this.width));
         this._connected = true;
     }
 
@@ -79,15 +79,15 @@ class RateButton extends HTMLCustomElement {
         return starRating;
     }
 
-    get star() {
+    get stars() {
         return this.getAttribute("stars") || DEFAULT_STAR_COUNT;
     }
 
-    set star(star) {
-        if (star) {
-            this.setAttribute("star", star);
+    set stars(stars) {
+        if (stars) {
+            this.setAttribute("stars", stars);
         } else {
-            this.removeAttribute("star");
+            this.removeAttribute("stars");
         }
     }
 
