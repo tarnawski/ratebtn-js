@@ -1,6 +1,10 @@
 const API = "http://ratebtn.ttatrnawski.usermd.net";
 const DEFAULT_STAR_COUNT = 5;
 const DEFAULT_STAR_SIZE = 30;
+const FOREGROUND_COLOR = "#FFB900";
+const SECONDARY_COLOR = "#D3D3D3";
+
+const mock = 3.95;
 
 const get = (uri) =>
     fetch(API + '/api/rating?uri=' + uri, {
@@ -67,6 +71,11 @@ class RateButton extends HTMLCustomElement {
 
             polygon.setAttribute("points", points(starWidth));
             image.setAttribute("class", "star-svg");
+            if (mock < step) {
+                image.setAttribute("fill", SECONDARY_COLOR);
+            } else {
+                image.setAttribute("fill", FOREGROUND_COLOR);
+            }
             image.setAttribute("width", starWidth);
             image.setAttribute("height", starWidth);
             image.appendChild(polygon);
