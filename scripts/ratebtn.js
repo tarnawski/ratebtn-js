@@ -1,25 +1,23 @@
-const API = "http://ratebtn.ttatrnawski.usermd.net";
+const API = "http://api.ratebtn.ttarnawski.usermd.net";
 const DEFAULT_STAR_COUNT = 5;
 const DEFAULT_STAR_SIZE = 30;
 const FOREGROUND_COLOR = "#FFB900";
 const SECONDARY_COLOR = "#D3D3D3";
 
-const mock = 3.95;
-
 const get = (uri) =>
-    fetch(API + '/api/rating?uri=' + uri, {
+    fetch(API + '/votes?url=' + uri, {
         headers: {
             "Content-Type": "application/json"
         }
     }).then(response => response.text());
 
-const send = (uri, rate) =>
-    fetch(API + '/api/rating', {
+const send = (uri, rate, fingerprint) =>
+    fetch(API + '/votes', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({ uri: uri, rate: rate })
+        body: JSON.stringify({ url: uri, value: rate, fingerprint: fingerprint})
     }).then(response => response.text());
 
 const points = (size) => {
@@ -43,9 +41,47 @@ const points = (size) => {
     return points;
 };
 
+const fingerprint = (function(window, screen, navigator) {
+
+    function checksum(str) {
+        let hash = 5381,
+            i = str.length;
+
+        while (i--) hash = (hash * 33) ^ str.charCodeAt(i);
+
+        return hash >>> 0;
+    }
+
+    function map(arr, fn){
+        let i = 0, len = arr.length, ret = [];
+        while(i < len){
+            ret[i] = fn(arr[i++]);
+        }
+        return ret;
+    }
+
+    return checksum([
+        navigator.userAgent,
+        [screen.height, screen.width, screen.colorDepth].join('x'),
+        new Date().getTimezoneOffset(),
+        !!window.sessionStorage,
+        !!window.localStorage,
+        map(navigator.plugins, function (plugin) {
+            return [
+                plugin.name,
+                plugin.description,
+                map(plugin, function (mime) {
+                    return [mime.type, mime.suffixes].join('~');
+                }).join(',')
+            ].join("::");
+        }).join(';')
+    ].join('###'));
+
+}(this, screen, navigator));
+
 class HTMLCustomElement extends HTMLElement {
     constructor(_) {
-        return (_ = super(_)).init(), _;
+        return (_ = super()).init(), _;
     }
     init() {}
 }
@@ -57,21 +93,23 @@ class RateButton extends HTMLCustomElement {
             return;
         }
 
-        this.appendChild(this.render(this.stars, this.width));
+        get(encodeURI(document.location.href)).then(response => {
+            this.appendChild(this.render(this.stars, this.width, JSON.parse(response).average))
+        });
         this._connected = true;
     }
 
-    render(starCount, starWidth) {
+    render(starCount, starWidth, rating) {
         let starRating = document.createElement('div');
         starRating.setAttribute('class', 'star-rating');
 
         for (let step = starCount; step > 0; step--) {
             let polygon = document.createElementNS('http://www.w3.org/2000/svg','polygon');
-            let image = document .createElementNS("http://www.w3.org/2000/svg", "svg");
+            let image = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
             polygon.setAttribute("points", points(starWidth));
             image.setAttribute("class", "star-svg");
-            if (mock < step) {
+            if (rating < step) {
                 image.setAttribute("fill", SECONDARY_COLOR);
             } else {
                 image.setAttribute("fill", FOREGROUND_COLOR);
@@ -80,7 +118,7 @@ class RateButton extends HTMLCustomElement {
             image.setAttribute("height", starWidth);
             image.appendChild(polygon);
             image.addEventListener("click", function () {
-                send(document.location.href, step).then(response => console.log(response));
+                send(encodeURI(document.location.href), step, fingerprint).then(response => console.log(response));
             }, false);
             starRating.appendChild(image);
         }
