@@ -1,4 +1,4 @@
-const API = "http://api.ratebtn.ttarnawski.usermd.net";
+const API = "https://api.ratebtn.ttarnawski.usermd.net";
 const DEFAULT_STAR_COUNT = 5;
 const DEFAULT_STAR_SIZE = 30;
 const FOREGROUND_COLOR = "#FFB900";
