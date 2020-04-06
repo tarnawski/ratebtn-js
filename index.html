@@ -8,6 +8,10 @@
     <link href="styles/ratebtn.css" rel="stylesheet">
 </head>
 <style>
+    .container {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
     .top {
         text-align: center;
         margin-top: 150px;
@@ -23,8 +27,26 @@
         font-weight: normal;
         font-family: Verdana, Geneva, sans-serif;
     }
+    .container h3 {
+        font-size: 28px;
+        font-weight: normal;
+        font-family: Verdana, Geneva, sans-serif;
+    }
     .main {
         text-align: center;
+    }
+    .code {
+        display: block;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333;
+        word-break: break-all;
+        word-wrap: break-word;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
     }
 </style>
 <body>
@@ -40,6 +62,26 @@
 
 <div class="main">
     <rate-button width="100"/>
+</div>
+<div class="container">
+<h3 class="text-center">Add RateBtn to your website!</h3>
+<div class="code">
+    <xmp>
+        <!DOCTYPE html>
+        <head>
+            <!-- Add the widget style & script -->
+            <link href="https://ratebtn.ttarnawski.usermd.net/dist/ratebtn.css" rel="stylesheet"/>
+            <script src="https://ratebtn.ttarnawski.usermd.net/dist/ratebtn-min.js"></script>
+        </head>
+        <body>
+
+        <!-- Add the widget -->
+        <rate-button/>
+
+        </body>
+        </html>
+    </xmp>
+</div>
 </div>
 
 <script src="scripts/ratebtn.js"></script>
