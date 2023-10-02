@@ -11,7 +11,7 @@ pipeline {
 			steps {
 				sh 'npm install'
 				sh 'node_modules/gulp/bin/gulp.js'
-				sh 'tar -czvf artifact.tar dist scripts styles index.html'
+				sh 'tar -czvf artifact.tar dist images scripts styles index.html'
 				sh 'ansible-playbook ansible/deploy.yml'
 			}
 		}
