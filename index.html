@@ -14,7 +14,7 @@
     }
     .top {
         text-align: center;
-        margin-top: 150px;
+        margin-top: 20px;
         margin-bottom: 50px;
     }
     .top h1 {
@@ -37,7 +37,7 @@
     }
     .code {
         display: block;
-        padding: 9.5px;
+        padding: 10px;
         margin: 0 0 10px;
         font-size: 13px;
         line-height: 1.42857143;
@@ -47,6 +47,13 @@
         background-color: #f5f5f5;
         border: 1px solid #ccc;
         border-radius: 4px;
+    }
+    .footer {
+        padding: 50px 0;
+        text-align: center;
+    }
+    .footer-image {
+        vertical-align: middle;
     }
 </style>
 <body>
@@ -63,25 +70,32 @@
 <div class="main">
     <rate-button width="100"/>
 </div>
+
 <div class="container">
-<h3 class="text-center">Add RateBtn to your website!</h3>
-<div class="code">
-    <xmp>
-        <!DOCTYPE html>
-        <head>
-            <!-- Add the widget style & script -->
-            <link href="https://ratebtn.ttarnawski.usermd.net/current/dist/ratebtn.css" rel="stylesheet"/>
-            <script src="https://ratebtn.ttarnawski.usermd.net/current/dist/ratebtn-min.js"></script>
-        </head>
-        <body>
+    <h3 class="text-center">Add RateBtn to your website!</h3>
+    <div class="code">
+        <xmp>
+            <!DOCTYPE html>
+            <head>
+                <!-- Add the widget style & script -->
+                <link href="https://ratebtn.ttarnawski.usermd.net/current/dist/ratebtn.css" rel="stylesheet"/>
+                <script src="https://ratebtn.ttarnawski.usermd.net/current/dist/ratebtn-min.js"></script>
+            </head>
+            <body>
 
-        <!-- Add the widget -->
-        <rate-button/>
+            <!-- Add the widget -->
+            <rate-button/>
 
-        </body>
-        </html>
-    </xmp>
+            </body>
+            </html>
+        </xmp>
+    </div>
 </div>
+
+<div class="footer">
+    Made with <strike>love</strike> beer by <a href="https://github.com/tarnawski" target="_blank">@tarnawski</a>.
+    Be an awesome hacker, <a href="https://github.com/tarnawski/ratebtn-api" target="_blank">fork me</a>
+    <img class="footer-image" src="images/octocat.png" alt="GitHub Octocat Logo"/>
 </div>
 
 <script src="scripts/ratebtn.js"></script>
